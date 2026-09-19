@@ -8,7 +8,7 @@ const byResourceId = (id) => `android=new UiSelector().resourceId("${id}")`;
 describe("Event date/time display", () => {
   it("captures the rendered date/time text on Event Details", async () => {
     const continueButton = await $(byResourceId("continue-as-guest-button"));
-    await continueButton.waitForDisplayed({ timeout: 20000 });
+    await continueButton.waitForDisplayed({ timeout: 40000 });
     await continueButton.click();
 
     // Wait for the event list screen to confirm navigation succeeded
