@@ -1,0 +1,112 @@
+ID,Name,Description,Status,Priority,Automation Status,Preconditions,Test Steps (Steps),Test Steps (Results),Test Type,References
+T001,Guest entry via Continue as Guest button,Validates that a guest can enter the app without any sign-in or form fields by tapping the single Continue as Guest CTA on the landing screen.,active,High,not_automated,App is freshly launched on the landing screen showing the Encore logo and tagline.,"Launch the Encore app ~ Landing screen is displayed with the Encore logo, tagline 'Find a seat. See a show.', and a 'Continue as Guest' button",,smoke & sanity,None
+,,,,,,,Tap the 'Continue as Guest' button ~ App navigates directly to the Event List screen with no sign-in prompt or form fields shown,,,
+,,,,,,,"Verify the Events header and category filter chips are visible ~ 'Events' heading, 'All' chip (selected), and category chips (Music, Sports, Theater, Classical, Comedy) are displayed",,,
+,,,,,,,Verify the 'My Bookings' navigation button is visible in the header ~ 'My Bookings' button is present in the top-right area,,,
+T002,"Event list displays title, category, venue, date and starting price","Validates that each event card in the catalog shows all required fields: title, category badge, venue, date/time, and starting price.",active,High,not_automated,Guest has tapped 'Continue as Guest' and is on the Event List screen.,"Observe the first event card in the list ~ Card displays a category badge (e.g. 'Music'), event title, venue name, date/time, and a 'From $X' price",,functional,None
+,,,,,,,"Scroll through several event cards ~ Every visible card consistently shows all five fields: category, title, venue, date/time, price",,,
+,,,,,,,Verify no card is missing any of the required fields ~ All cards are fully populated with no blank or placeholder values,,,
+T003,Category filter narrows event list to selected category,"Validates that tapping a category chip filters the event list to show only events of that category, and tapping 'All' resets the full catalog.",active,High,not_automated,Guest is on the Event List screen with 'All' filter selected.,Note the total number of events visible in the list ~ All events across all categories are displayed,,functional,None
+,,,,,,,Tap the 'Music' category filter chip ~ Chip becomes selected; event list updates to show only Music events,,,
+,,,,,,,Verify every visible event card shows the 'Music' category badge ~ No events from other categories appear in the list,,,
+,,,,,,,Tap the 'All' filter chip ~ All events are restored; 'All' chip is selected and Music chip is deselected,,,
+,,,,,,,"Repeat filter selection for Sports, Theater, Classical, and Comedy categories ~ Each filter correctly narrows the list to only that category's events",,,
+T004,Sold-out events are marked and cannot be selected,Validates that events with no remaining seats display a sold-out indicator and are not tappable to proceed to booking.,active,Medium,not_automated,Guest is on the Event List screen and at least one sold-out event exists in the catalog.,Scroll through the event list to locate a sold-out event ~ Sold-out event card displays a 'Sold Out' indicator/badge,,functional,None
+,,,,,,,Attempt to tap the sold-out event card ~ No navigation occurs; the event cannot be opened for seat selection,,,
+,,,,,,,Verify available events remain tappable ~ Tapping an available event navigates to its Event Details screen,,,
+T005,Event Details screen shows full event information and seating summary,"Validates that the Event Details screen displays the full description, venue, date/time, and a seating breakdown showing Standard vs VIP counts and remaining seats.",active,High,not_automated,Guest is on the Event List screen and has tapped an available event card.,"Tap an available event card (e.g. 'Late Night Jazz') ~ Event Details screen opens showing the event title, category badge, venue, and date/time",,functional,None
+,,,,,,,Verify the 'ABOUT THIS EVENT' section is present ~ Full event description text is displayed,,,
+,,,,,,,"Verify the 'SEATING' section shows Standard seat count, VIP seat count, and remaining availability ~ Seating summary shows numeric counts for Standard seats, VIP seats, and total remaining",,,
+,,,,,,,Verify the 'Select a Seat' button is present at the bottom ~ Button is visible and tappable,,,
+,,,,,,,Tap the back/navigate-up button ~ Returns to the Event List screen,,,
+T006,"Seat map displays seats with correct tier, price and availability state","Validates that the seat selection screen renders a seat map grouped by row, with each seat showing its tier (Standard/VIP), price, and correct availability state (available, booked, selected).",active,High,not_automated,Guest has opened an event's details screen and tapped 'Select a Seat'.,"Observe the seat map on the Seat Selection screen ~ Seats are grouped by row (e.g. Row A), each seat button shows its number and is colour-coded by state",,functional,None
+,,,,,,,"Verify the seat legend is visible ~ Legend shows Standard, VIP, Selected, and Booked states",,,
+,,,,,,,Verify the 'Select up to 10 seats' instruction is displayed ~ Instruction text is visible below the event title,,,
+,,,,,,,"Verify seat accessibility descriptions include tier, state and price (e.g. 'Seat A1, standard, available, $32') ~ Each seat button has a descriptive label matching its actual tier and price",,,
+,,,,,,,Verify already-booked seats are not tappable ~ Booked seats cannot be selected,,,
+T007,Selecting and deselecting seats updates summary count and total price,"Validates that tapping an available seat marks it as selected, updates the seat count summary and running total, and tapping it again deselects it.",active,High,not_automated,Guest is on the Seat Selection screen with at least two available seats visible.,Tap an available seat (e.g. Seat A1) ~ Seat state changes to 'selected'; summary bar appears showing '1 seat selected' and the seat's price,,functional,None
+,,,,,,,Tap a second available seat (e.g. Seat A2) ~ Summary updates to '2 seats selected' and total price reflects both seats,,,
+,,,,,,,Tap the first selected seat again (Seat A1) ~ Seat is deselected; summary updates to '1 seat selected' and total price decreases accordingly,,,
+,,,,,,,Verify the 'Continue to Discount Code' button is enabled when at least one seat is selected ~ Button is tappable,,,
+T008,Maximum 10 seats can be selected in a single booking,Validates that the app enforces the 10-seat limit per booking and prevents selecting an 11th seat.,active,Medium,not_automated,Guest is on the Seat Selection screen for an event with at least 11 available seats.,Select 10 available seats one by one ~ Summary shows '10 seats selected' and total price reflects all 10 seats,,functional,None
+,,,,,,,Attempt to tap an 11th available seat ~ The 11th seat cannot be selected; an error or informational message is shown indicating the 10-seat limit has been reached,,,
+,,,,,,,Verify the 10 previously selected seats remain selected ~ No previously selected seat is deselected automatically,,,
+T009,Proceeding without selecting any seat is blocked,Validates that the Continue button on the Seat Selection screen is disabled or shows an error when no seats have been selected.,active,Medium,not_automated,Guest is on the Seat Selection screen with no seats selected.,Observe the Seat Selection screen with no seats selected ~ No summary bar is shown; 'Continue to Discount Code' button is disabled or not actionable,,functional,None
+,,,,,,,Attempt to tap the 'Continue to Discount Code' button ~ Navigation to the Discount Code screen does not occur; user remains on Seat Selection,,,
+T010,SAVE10 applies 10% discount to Standard seats only,Validates that the SAVE10 code discounts Standard-tier seats by 10% and does not discount VIP-tier seats in the same order.,active,High,not_automated,Guest has selected at least one Standard seat and one VIP seat and is on the Discount Code screen.,Note the subtotal shown on the Discount Code screen ~ Subtotal reflects the full price of all selected seats,,functional,None
+,,,,,,,Enter 'SAVE10' in the discount code input field ~ Field is populated with the code,,,
+,,,,,,,Tap the 'Apply' button ~ Discount is applied; input and Apply button are replaced by a discount-applied label with a 'Remove' option,,,
+,,,,,,,Tap 'Continue to Payment' ~ Payment screen opens,,,
+,,,,,,,Verify each Standard seat line item shows a 10% reduced price ~ Standard seat prices are reduced by 10%,,,
+,,,,,,,Verify each VIP seat line item shows the original full price ~ VIP seat prices are unchanged,,,
+,,,,,,,Verify the discount row shows the correct discount amount and the total reflects the discounted Standard seats ~ Discount row and total are mathematically correct,,,
+T011,FIRST20 applies 20% discount on first booking only,"Validates that FIRST20 gives 20% off any seat on the guest's first booking in a session, and is rejected on any subsequent booking.",active,High,not_automated,Guest has not yet completed any booking in the current session. Guest has selected seats and is on the Discount Code screen.,Enter 'FIRST20' in the discount code input and tap Apply ~ Code is accepted; discount-applied label is shown,,functional,None
+,,,,,,,Proceed through Payment and complete the first booking ~ Booking confirmation is shown with 20% discount applied to all seats,,,
+,,,,,,,"Return to Events, select seats for a second event, and navigate to the Discount Code screen ~ Discount Code screen is displayed",,,
+,,,,,,,Enter 'FIRST20' and tap Apply ~ Code is rejected with an inline error message indicating the code is no longer valid,,,
+,,,,,,,Verify the guest can still proceed to payment without the code ~ 'Continue to Payment' button remains available,,,
+T012,"WELCOME15 applies 15% discount from second booking onward, valid once","Validates that WELCOME15 is invalid on the first booking, applies 15% off any seat on the second booking, and becomes invalid again after one successful use.",active,High,not_automated,Guest has completed exactly one booking in the current session and is on the Discount Code screen for a second booking.,"On the first booking's Discount Code screen, enter 'WELCOME15' and tap Apply ~ Code is rejected with an error indicating it is not valid on the first booking",,functional,None
+,,,,,,,Complete the first booking without the code ~ First booking is confirmed,,,
+,,,,,,,Select seats for a second event and navigate to the Discount Code screen ~ Discount Code screen is displayed,,,
+,,,,,,,Enter 'WELCOME15' and tap Apply ~ Code is accepted; 15% discount is applied to all seats,,,
+,,,,,,,Complete the second booking ~ Booking confirmed with 15% discount on all seats,,,
+,,,,,,,"Select seats for a third event, navigate to Discount Code screen, enter 'WELCOME15' and tap Apply ~ Code is rejected; it is no longer valid after one successful use",,,
+T013,Invalid discount code shows inline error and does not block checkout,Validates that entering an unrecognised discount code shows an inline error message and the guest can still proceed to payment without a valid code.,active,Medium,not_automated,Guest has selected seats and is on the Discount Code screen.,Enter an invalid code (e.g. 'INVALID123') in the discount code input field ~ Field is populated,,functional,None
+,,,,,,,Tap the 'Apply' button ~ An inline error message is displayed indicating the code is invalid; the input field remains editable,,,
+,,,,,,,Verify the 'Continue to Payment' button is still accessible ~ Button is enabled and tappable,,,
+,,,,,,,Tap 'Continue to Payment' without a valid code ~ Navigation proceeds to the Payment screen with no discount applied,,,
+,,,,,,,Verify the Payment screen shows the full subtotal with no discount row ~ Total equals the full seat prices with no deduction,,,
+T014,Discount code is case-insensitive,"Validates that discount codes are matched case-insensitively, so entering 'save10' or 'Save10' applies the same discount as 'SAVE10'.",active,Medium,not_automated,Guest has selected Standard seats and is on the Discount Code screen.,Enter 'save10' (all lowercase) in the discount code input and tap Apply ~ Code is accepted and 10% discount is applied to Standard seats,,functional,None
+,,,,,,,Remove the code and re-enter 'Save10' (mixed case) and tap Apply ~ Code is accepted and 10% discount is applied,,,
+,,,,,,,Verify the discount amount on the Payment screen is identical regardless of the case used ~ Discount is correctly applied in all case variations,,,
+T015,Skipping discount code proceeds directly to payment,Validates that the guest can skip the Discount Code screen entirely and proceed to payment without entering any code.,active,Medium,not_automated,Guest has selected seats and is on the Discount Code screen with no code entered.,Observe the Discount Code screen ~ 'Optional — you can skip this and continue to payment.' message is displayed,,functional,None
+,,,,,,,Tap 'Continue to Payment' without entering any code ~ Payment screen opens,,,
+,,,,,,,Verify the Payment screen shows the full subtotal with no discount row ~ Total equals the full seat prices; no discount line item is present,,,
+T016,Payment screen shows correct order summary with seat details and totals,"Validates that the Payment screen displays every selected seat, the subtotal, any applied discount, and the correct final total before confirming payment.",active,High,not_automated,"Guest has selected seats, optionally applied a discount code, and is on the Payment screen.",Observe the Payment screen ~ 'Review & Pay' heading is displayed along with the event name and venue,,functional,None
+,,,,,,,"Verify each selected seat is listed with its tier and discounted/full price ~ Each seat line item shows seat ID, tier (Standard/VIP), and correct price",,,
+,,,,,,,Verify the Subtotal row shows the sum of full seat prices ~ Subtotal is mathematically correct,,,
+,,,,,,,"If a discount was applied, verify the Discount row shows the code name and correct deduction amount ~ Discount row is present and amount is correct",,,
+,,,,,,,Verify the Total row shows the final amount after any discount ~ Total = Subtotal − Discount,,,
+,,,,,,,Verify the mock payment notice is displayed ~ 'This is a mock payment. No card details are collected.' message is visible,,,
+,,,,,,,Verify the 'Pay Now' button is present and enabled ~ Button is tappable,,,
+T017,Completing payment shows booking confirmation with all details,"Validates that tapping Pay Now finalises the booking and displays a Confirmation screen with a unique confirmation number, event details, seat breakdown, and final price paid.",active,High,not_automated,Guest is on the Payment screen with seats selected and order summary reviewed.,Tap the 'Pay Now' button ~ A processing indicator is briefly shown,,functional,None
+,,,,,,,Wait for the Confirmation screen to appear ~ Screen title changes to 'Confirmation'; a checkmark icon and 'Booking Confirmed' heading are displayed,,,
+,,,,,,,Verify a unique confirmation number is shown (e.g. BK-XXXXXX) ~ Confirmation number is present and non-empty,,,
+,,,,,,,"Verify the event title, venue, and date/time are displayed ~ Event details match the booked event",,,
+,,,,,,,Verify each booked seat is listed with its tier and price paid ~ Seat line items match the Payment screen,,,
+,,,,,,,"If a discount was applied, verify 'Discount applied: <CODE>' is shown ~ Discount code label is present",,,
+,,,,,,,Verify 'View My Bookings' and 'Back to Events' buttons are present ~ Both navigation options are available,,,
+T018,Booked seats are no longer available for selection by the same session,Validates that seats confirmed in a completed booking are marked as booked and cannot be selected again in a subsequent booking for the same event.,active,High,not_automated,Guest has completed a booking for an event and is back on the Event List screen.,Navigate back to the same event that was just booked ~ Event Details screen opens,,functional,None
+,,,,,,,Tap 'Select a Seat' ~ Seat Selection screen opens,,,
+,,,,,,,Verify the previously booked seats are now shown in the 'Booked' state ~ Booked seats are visually distinct and not selectable,,,
+,,,,,,,Attempt to tap a booked seat ~ Seat cannot be selected; state remains 'booked',,,
+,,,,,,,Verify remaining available seats can still be selected ~ Other available seats respond to taps normally,,,
+T019,My Bookings lists all session bookings most-recent first,"Validates that the My Bookings screen shows all bookings made in the current session in reverse-chronological order, each with event, seats, total price, and confirmation number.",active,High,not_automated,Guest has completed at least two bookings in the current session.,Tap 'My Bookings' from the Event List header or 'View My Bookings' from the Confirmation screen ~ My Bookings screen opens,,functional,None
+,,,,,,,Verify the most recently completed booking appears at the top of the list ~ Most recent booking is first,,,
+,,,,,,,"Verify each booking entry shows the event title, total price, venue, date/time, seat count, individual seat details, and confirmation number ~ All required fields are present for each booking",,,
+,,,,,,,Verify the number of entries matches the number of bookings completed in the session ~ No bookings are missing or duplicated,,,
+T020,My Bookings is empty before any booking is made,Validates that the My Bookings screen shows an appropriate empty state when no bookings have been made in the current session.,active,Low,not_automated,Guest has just entered the app via 'Continue as Guest' and has not completed any booking.,Tap the 'My Bookings' button in the Event List header ~ My Bookings screen opens,,functional,None
+,,,,,,,Verify no booking entries are displayed ~ An empty state message or illustration is shown indicating no bookings yet,,,
+,,,,,,,Verify the screen does not crash or show an error ~ Screen renders gracefully with an appropriate empty state,,,
+T021,Full end-to-end booking flow without discount code,Validates the complete happy-path booking journey: guest entry → event list → event details → seat selection → skip discount → payment → confirmation.,active,High,not_automated,App is freshly launched on the landing screen.,Tap 'Continue as Guest' ~ Event List screen is displayed,,acceptance,None
+,,,,,,,Tap any available event card ~ Event Details screen opens with full event information,,,
+,,,,,,,Tap 'Select a Seat' ~ Seat Selection screen opens,,,
+,,,,,,,Select one or more available seats ~ Summary bar shows seat count and total price,,,
+,,,,,,,Tap 'Continue to Discount Code' ~ Discount Code screen opens showing seat summary and subtotal,,,
+,,,,,,,Tap 'Continue to Payment' without entering a code ~ Payment screen opens with full-price order summary,,,
+,,,,,,,"Tap 'Pay Now' ~ Processing indicator appears briefly, then Confirmation screen is shown",,,
+,,,,,,,"Verify confirmation number, event details, seat details, and total price are all correct ~ All booking details match what was selected",,,
+T022,Full end-to-end booking flow with valid discount code SAVE10,"Validates the complete booking journey with a valid SAVE10 discount code applied, verifying the discount is correctly reflected through the payment and confirmation screens.",active,High,not_automated,App is freshly launched. Guest enters via 'Continue as Guest'. An event with Standard seats is available.,Tap 'Continue as Guest' and select an event with Standard seats ~ Event Details screen opens,,acceptance,None
+,,,,,,,"Tap 'Select a Seat', select two Standard seats, tap 'Continue to Discount Code' ~ Discount Code screen shows 2 seats and subtotal",,,
+,,,,,,,Enter 'SAVE10' and tap Apply ~ Discount-applied label appears with a Remove option,,,
+,,,,,,,"Tap 'Continue to Payment' ~ Payment screen shows each Standard seat at 10% off, discount row with correct deduction, and correct total",,,
+,,,,,,,Tap 'Pay Now' ~ Confirmation screen appears,,,
+,,,,,,,Verify confirmation shows 'Discount applied: SAVE10' and the discounted seat prices ~ Discount is correctly reflected on the confirmation screen,,,
+,,,,,,,Tap 'View My Bookings' ~ My Bookings screen shows the booking with the discounted total,,,
+T023,Back navigation works correctly throughout the booking flow,Validates that the back/navigate-up button on each screen returns the guest to the previous screen without losing context.,active,Medium,not_automated,Guest is on the Event List screen.,Tap an event card to open Event Details ~ Event Details screen opens,,functional,None
+,,,,,,,Tap the back button ~ Returns to Event List screen,,,
+,,,,,,,"Tap the same event, tap 'Select a Seat', select a seat, tap 'Continue to Discount Code' ~ Discount Code screen opens",,,
+,,,,,,,Tap the back button ~ Returns to Seat Selection screen with previously selected seat still selected,,,
+,,,,,,,"Tap 'Continue to Discount Code' again, then tap 'Continue to Payment' ~ Payment screen opens",,,
+,,,,,,,Tap the back button ~ Returns to Discount Code screen,,,
+,,,,,,,Tap 'Continue to Payment' again ~ Payment screen opens with the same order summary,,,
